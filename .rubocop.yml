@@ -1,0 +1,193 @@
+AllCops:
+  DefaultFormatter: progress
+  TargetRubyVersion: 2.5
+
+Layout/AlignParameters:
+  EnforcedStyle: with_first_parameter
+
+Layout/ClassStructure:
+  ExpectedOrder:
+    - constants
+    - module_inclusion
+    - initializer
+    - public_methods
+    - public_class_methods
+    - protected_methods
+    - private_methods
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true
+
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+Layout/MultilineMethodDefinitionBraceLayout:
+  EnforcedStyle: same_line
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 2
+
+Layout/RescueEnsureAlignment:
+  Enabled: false
+
+Layout/SpaceInsideArrayPercentLiteral:
+  Exclude:
+    - 'lib/tasks/*_permissions.rake'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+Lint/NestedMethodDefinition:
+  Enabled: false
+
+Lint/AmbiguousOperator:
+  Enabled: false
+
+Lint/RescueException:
+  Exclude:
+    - 'lib/business_pipeline/lib/business_pipeline/interceptors/error_handling.rb'
+    - 'lib/business_pipeline/lib/business_pipeline/interceptors/error_reporting.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/services/retro_compatibility/*_backporter.rb'
+    - 'lib/tasks/*.rake'
+    - 'spec/support/payloads/**/*.rb'
+  Max: 18
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.builder'
+    - '**/*.rake'
+    - 'app/views/api/v3/**/_*.jb'
+    - 'config/environments/production.rb'
+    - 'config/routes.rb'
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'spec/**/*.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'app/forms/**/*.rb'
+    - 'app/services/retro_compatibility/*_backporter.rb'
+    - 'app/services/tracking/*tracking_handler.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'lib/tasks/*.rake'
+
+Metrics/LineLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'lib/**/*.gemspec'
+    - 'lib/tasks/*.rake'
+    - 'spec/**/*_spec.rb'
+    - 'spec/support/factories/*.rb'
+  Max: 90
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/services/retro_compatibility/*_backporter.rb'
+    - 'app/services/tracking/**/*.rb'
+    - 'app/web_strategies/**/*.rb'
+    - 'spec/support/payloads/**/*.rb'
+
+Naming/PredicateName:
+  NamePrefixBlacklist:
+    - is_
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+
+Performance/RedundantBlockCall:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+# FIXME: https://github.com/bbatsov/rubocop/issues/4751
+# Rails/HasManyOrHasOneDependent:
+#   Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/FormatStringToken:
+  EnforcedStyle: template
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%':  '{}'
+    '%i': '[]'
+    '%q': '{}'
+    '%Q': '{}'
+    '%r': '{}'
+    '%s': '{}'
+    '%w': '[]'
+    '%W': '[]'
+    '%x': '{}'
+
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
+
+Style/SignalException:
+  EnforcedStyle: semantic
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+
+Style/YodaCondition:
+  Enabled: false
