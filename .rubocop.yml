@@ -5,6 +5,10 @@ AllCops:
 Layout/AlignParameters:
   EnforcedStyle: with_first_parameter
 
+Layout/BlockEndNewline:
+  Exclude:
+    - spec/**/*_spec.rb
+
 Layout/ClassStructure:
   ExpectedOrder:
     - constants
@@ -36,6 +40,10 @@ Layout/IndentArray:
 Layout/IndentHash:
   EnforcedStyle: consistent
 
+Layout/MultilineBlockLayout:
+  Exclude:
+    - spec/**/*_spec.rb
+
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line
 
@@ -52,6 +60,10 @@ Layout/RescueEnsureAlignment:
 Layout/SpaceInsideArrayPercentLiteral:
   Exclude:
     - 'lib/tasks/*_permissions.rake'
+
+Layout/SpaceInsideBlockBraces:
+  Exclude:
+    - spec/**/*_spec.rb
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -143,6 +155,10 @@ Style/Alias:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - spec/**/*_spec.rb
 
 Style/Documentation:
   Enabled: false
