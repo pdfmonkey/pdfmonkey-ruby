@@ -13,10 +13,12 @@ RSpec.describe Pdfmonkey do
 
   describe 'configuration=' do
     it 'sets the Configuration object' do
-      described_class.configuration = 'Something'
-      expect(described_class.configuration).to eq('Something')
-    ensure
-      described_class.configuration = nil
+      begin
+        described_class.configuration = 'Something'
+        expect(described_class.configuration).to eq('Something')
+      ensure
+        described_class.configuration = nil
+      end
     end
   end
 
