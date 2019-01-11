@@ -1,5 +1,5 @@
-require 'simplecov'
-SimpleCov.start { add_filter %r{^/spec/} }
+require 'coveralls'
+Coveralls.wear!
 
 require 'pdfmonkey'
 
