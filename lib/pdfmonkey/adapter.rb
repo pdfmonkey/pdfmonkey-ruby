@@ -10,7 +10,14 @@ module Pdfmonkey
 
     def call(method, resource)
       response = send_request(method, resource)
-      extract_attributes(response, resource)
+
+      if response.is_a?(Net::HTTPSuccess)
+        extract_attributes(response, resource)
+      else
+        extract_errors(response)
+      end
+    rescue StandardError => e
+      { errors: [e.message], status: 'error' }
     end
 
     private def build_get_request(uri, _resource)
@@ -26,6 +33,11 @@ module Pdfmonkey
     private def extract_attributes(response, resource)
       member = resource.class.const_get('MEMBER')
       JSON.parse(response.body).fetch(member)
+    end
+
+    private def extract_errors(response)
+      payload = JSON.parse(response.body)
+      { errors: payload['errors'], status: 'error' }
     end
 
     private def headers

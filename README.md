@@ -104,6 +104,28 @@ curl <url of your app> \
       }'
 ```
 
+#### Error handling
+
+In case of error, be it an HTTP layer error or an API error, `document.status` will be set to `'error'` and `document.error` will contain the error message.
+
+```ruby
+# Using an unknown template
+
+tempalte_id = 'unknown'
+data = { name: 'John Doe' }
+
+document = Pdfmonkey::Document.generate(template_id, data)
+
+document.status # => 'error'
+document.errors # => ["Couldn't find DocumentTemplate with 'id'=unknown"]
+
+# If the network is down
+document = Pdfmonkey::Document.generate(template_id, data)
+
+document.status # => 'error'
+document.errors # => ["Failed to open TCP connection to api.pdfmonkey.io:443 (getaddrinfo: nodename nor servname provided, or not known)"]
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

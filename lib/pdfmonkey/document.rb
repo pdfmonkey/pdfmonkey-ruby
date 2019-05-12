@@ -14,6 +14,7 @@ module Pdfmonkey
       created_at
       document_template_id
       download_url
+      errors
       id
       meta
       payload
@@ -22,7 +23,7 @@ module Pdfmonkey
       updated_at
     ].freeze
 
-    COMPLETE_STATUSES = %w[failure success].freeze
+    COMPLETE_STATUSES = %w[error failure success].freeze
     COLLECTION = 'documents'
     MEMBER = 'document'
 
@@ -57,7 +58,10 @@ module Pdfmonkey
     end
 
     def to_json
-      { document: attributes.to_h }.to_json
+      attrs = attributes.to_h
+      attrs.delete(:errors)
+
+      { document: attrs }.to_json
     end
 
     private def save
