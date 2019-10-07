@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 0.3.0
 
 * Adding `Document#done?` to check if a document is complete
 
