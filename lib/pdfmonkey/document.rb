@@ -32,7 +32,7 @@ module Pdfmonkey
 
     def self.generate!(document_template_id, payload)
       document = generate(document_template_id, payload)
-      document.reload! until COMPLETE_STATUSES.include?(document.status)
+      document.reload! until document.done?
       document
     end
 
@@ -49,6 +49,10 @@ module Pdfmonkey
       @adapter = adapter
       @attributes = OpenStruct.new(ATTRIBUTES.zip([]).to_h)
       update(attributes)
+    end
+
+    def done?
+      COMPLETE_STATUSES.include?(status)
     end
 
     def reload!

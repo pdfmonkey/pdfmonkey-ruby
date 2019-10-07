@@ -72,6 +72,21 @@ RSpec.describe Pdfmonkey::Document do
     end
   end
 
+  describe '#done?' do
+    shared_examples 'detecting "done" states' do |state, expected_result|
+      let(:attributes) {{ status: state }}
+      specify { expect(subject.done?).to be expected_result }
+    end
+
+    it_behaves_like 'detecting "done" states', 'error', true
+    it_behaves_like 'detecting "done" states', 'failure', true
+    it_behaves_like 'detecting "done" states', 'success', true
+
+    it_behaves_like 'detecting "done" states', 'draft', false
+    it_behaves_like 'detecting "done" states', 'generating', false
+    it_behaves_like 'detecting "done" states', 'pending', false
+  end
+
   describe '#reload!' do
     let(:new_attributes) { attributes.merge(status: 'new value') }
 
