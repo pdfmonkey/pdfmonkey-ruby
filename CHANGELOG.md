@@ -3,6 +3,7 @@
 ## HEAD
 
 * Adding meta to `Document.generate!` and `Document.generate`
+* Fixing the errors extraction to conform to the current API format
 
 ## 0.3.0
 

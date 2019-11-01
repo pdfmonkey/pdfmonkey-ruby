@@ -37,7 +37,9 @@ module Pdfmonkey
 
     private def extract_errors(response)
       payload = JSON.parse(response.body)
-      { errors: payload['errors'], status: 'error' }
+      errors = payload['errors'].to_a.map { |error| error['detail'] }
+
+      { errors: errors, status: 'error' }
     end
 
     private def headers

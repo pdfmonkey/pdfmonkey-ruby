@@ -138,7 +138,7 @@ data = { name: 'John Doe' }
 document = Pdfmonkey::Document.generate(template_id, data)
 
 document.status # => 'error'
-document.errors # => ["Couldn't find DocumentTemplate with 'id'=unknown"]
+document.errors # => ["Document template must exist"]
 
 # If the network is down
 document = Pdfmonkey::Document.generate(template_id, data)

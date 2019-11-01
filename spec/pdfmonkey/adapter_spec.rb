@@ -42,7 +42,7 @@ RSpec.describe Pdfmonkey::Adapter do
     end
 
     context 'when the request fails on the API side' do
-      let(:response_body) { '{"errors": ["test failed"]}' }
+      let(:response_body) { '{"errors": [{ "detail": "test failed" }]}' }
       let(:success) { false }
 
       it 'returns a hash containing the error message' do
