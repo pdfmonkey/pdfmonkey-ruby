@@ -1,13 +1,23 @@
 language: ruby
 
-before_install:
-  - gem install bundler --version '~> 1.17'
+before_install: gem install bundler --version '~> 1.17'
+cache: bundler
+dist: bionic
 
-dist: trusty
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+  fast_finish: true
+
+notifications:
+  email: false
+  slack:
+    secure: YimzUcOW2fIo+CyYB5sBgUydS49JNtTIEowyinPAfDifAYgRNx/8c5kPk0aLk8klbnNBd8pMene/i4MIfApRuUmzAkGLe/1CCbotGn7zN7R6S46tpkGaHyMya5leiQemT6gIeL5+J4mQwDcTppXYh9kNTSYKh6RNLJxS7XUZZrNqOK6R2e/hX71aqUJTA5laSQ5mR5Hvyl9kUaJW5b77myXiU6VdrHmCl3sZ9hMqe6mroyBbVOAf1eFQMo7QX9HuLTUHJA2KIpnA7cLEXLINtnKjkhRVR0hcuGMETJhrJI/Ylqi1kf3PRPqkD/Q9msBo01OcRSoGwTjQ2IS1gOcYDowgvpJhkvx2v17fk4j1w3zR5KHSYJlrYOnr+ayU9K3LTs62X8ppVHff6pkKjOEF+p1Mayk/DqbaaH0PnCxqBqJOqZ5kFSkz6y4DDQzVuYILi6qUfgZFQJ01LNR7zbJAI6v9xDqREPG/Bfh7QI5z4eETlZWF9CVX6OARYm43to/wLLg2AEEduoMjexMoIxXRgzsTyBnxKYW3P+0oXWtiH68PXEKF9qAEl8lK4tTjbPBiEgXgUMDWQIiG0y6M567Rg8s8CUiw5ZsQTGJE+9zn4OkM/3VTce1mNLoZPyF66S5sXTPFXjieHCnMS3vegc3OJzLI/Xpx/lPDEU+8CYBaA1I=
 
 rvm:
-  - 2.6
-  - 2.5
-  - 2.4
-  - rbx-4
-  - truffleruby
+- ruby-head
+- 2.6
+- 2.5
+- 2.4
+- jruby-head
