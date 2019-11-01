@@ -104,6 +104,27 @@ curl <url of your app> \
       }'
 ```
 
+#### Attaching meta data to the document
+
+In addition to the Document’s payload you can add meta data when generating a Document.
+
+This can be done by passing a third argument to the `generate!` and `generate` methods:
+
+```ruby
+meta = {
+  _filename: 'john-doe-contract.pdf',
+  client_id: '123xxx123'
+}
+
+document = Pdfmonkey::Document.generate!(template_id, payload, meta)
+document.meta
+# => '{"_filename":"john-doe-contract.pdf","client_id":"123xxx123"}'
+
+document = Pdfmonkey::Document.generate(template_id, payload, meta)
+document.meta
+# => '{"_filename":"john-doe-contract.pdf","client_id":"123xxx123"}'
+```
+
 #### Error handling
 
 In case of error, be it an HTTP layer error or an API error, `document.status` will be set to `'error'` and `document.error` will contain the error message.

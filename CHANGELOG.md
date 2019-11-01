@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+* Adding meta to `Document.generate!` and `Document.generate`
+
 ## 0.3.0
 
 * Adding `Document#done?` to check if a document is complete

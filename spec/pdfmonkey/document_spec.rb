@@ -37,6 +37,19 @@ RSpec.describe Pdfmonkey::Document do
       expect(document).to be_a(described_class)
     end
 
+    context 'when the meta parameter is provided' do
+      let(:document) do
+        described_class.generate!(
+          'test-tempalte-id',
+          { payload_key: 'paylad value' },
+          { meta_key: 'meta value' })
+      end
+
+      it 'adds it to the document' do
+        expect(document.meta).to eq('{"meta_key":"meta value"}')
+      end
+    end
+
     context 'when the document eventually gets a success status' do
       it 'waits for the success status before returning the document' do
         expect(document.status).to eq('success')
@@ -69,6 +82,19 @@ RSpec.describe Pdfmonkey::Document do
 
     it 'sets the document attributes to the one returned by the API' do
       expect(document).to have_attributes(id: 'new id', payload: '{"test":"test value"}')
+    end
+
+    context 'when the meta parameter is provided' do
+      let(:document) do
+        described_class.generate(
+          'test-tempalte-id',
+          { payload_key: 'paylad value' },
+          { meta_key: 'meta value' })
+      end
+
+      it 'adds it to the document' do
+        expect(document.meta).to eq('{"meta_key":"meta value"}')
+      end
     end
   end
 
