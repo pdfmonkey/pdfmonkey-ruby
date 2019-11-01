@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 0.4.0
 
 * Adding meta to `Document.generate!` and `Document.generate`
 * Fixing the errors extraction to conform to the current API format
