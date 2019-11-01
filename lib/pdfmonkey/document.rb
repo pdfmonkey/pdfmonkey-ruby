@@ -30,6 +30,10 @@ module Pdfmonkey
     attr_reader :attributes
     def_delegators :attributes, *ATTRIBUTES
 
+    def self.fetch(document_id)
+      new(id: document_id).reload!
+    end
+
     def self.generate!(document_template_id, payload, meta = {})
       document = generate(document_template_id, payload, meta)
       document.reload! until document.done?

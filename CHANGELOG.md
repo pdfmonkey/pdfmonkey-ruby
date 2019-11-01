@@ -4,6 +4,7 @@
 
 * Adding meta to `Document.generate!` and `Document.generate`
 * Fixing the errors extraction to conform to the current API format
+* Adding `Document.fetch` to retrieve a document
 
 ## 0.3.0
 

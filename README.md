@@ -147,6 +147,31 @@ document.status # => 'error'
 document.errors # => ["Failed to open TCP connection to api.pdfmonkey.io:443 (getaddrinfo: nodename nor servname provided, or not known)"]
 ```
 
+### Fetching a document
+
+You can fetch an existing document using the `.fetch` method:
+
+```ruby
+document = Pdfmonkey::Document.fetch('76bebeb9-9eb1-481a-bc3c-faf43dc3ac81')
+```
+
+#### Error handling
+
+In case of error, be it an HTTP layer error or an API error, `document.status` will be set to `'error'` and `document.error` will contain the error message.
+
+```ruby
+document = Pdfmonkey::Document.fetch('unknown')
+
+document.status # => 'error'
+document.errors # => ["We couldn't find any Document with ID \"unknown\"..."]
+
+# If the network is down
+document = Pdfmonkey::Document.fetch('95eb0b6e-090b-4195-9b7c-cc3d50099867')
+
+document.status # => 'error'
+document.errors # => ["Failed to open TCP connection to api.pdfmonkey.io:443 (getaddrinfo: nodename nor servname provided, or not known)"]
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

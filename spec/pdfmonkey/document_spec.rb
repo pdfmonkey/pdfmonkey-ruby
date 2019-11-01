@@ -17,6 +17,21 @@ RSpec.describe Pdfmonkey::Document do
     updated_at: 'updated-at value'
   }}
 
+  describe '.fetch' do
+    let(:document) { described_class.fetch('xxx') }
+
+    before do
+      allow_any_instance_of(Pdfmonkey::Adapter)
+        .to receive(:call)
+        .with(:get, an_object_having_attributes(id: 'xxx'))
+        .and_return(attributes)
+    end
+
+    it 'fetches the document' do
+      expect(document).to have_attributes(attributes)
+    end
+  end
+
   describe '.generate!' do
     let(:adapter) { double }
     let(:document) { described_class.generate!('test-tempalte-id', test: 'test value') }
