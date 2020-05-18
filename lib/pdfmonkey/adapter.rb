@@ -45,7 +45,8 @@ module Pdfmonkey
     private def headers
       {
         'Authorization' => "Bearer #{config.private_key}",
-        'Content-Type' => 'application/json'
+        'Content-Type' => 'application/json',
+        'User-Agent' => 'Ruby'
       }
     end
 
