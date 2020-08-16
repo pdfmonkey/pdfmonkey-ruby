@@ -1,6 +1,6 @@
 # Changelog
 
-# HEAD
+# 0.5.0
 
 * Adding `Document#filename`
 * Adding `Document.delete` and `Document#delete!`
