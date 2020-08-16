@@ -1,5 +1,9 @@
 # Changelog
 
+# HEAD
+
+* Adding `Document#filename`
+
 ## 0.4.0
 
 * Adding meta to `Document.generate!` and `Document.generate`

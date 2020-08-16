@@ -15,6 +15,7 @@ module Pdfmonkey
       document_template_id
       download_url
       errors
+      filename
       id
       meta
       payload

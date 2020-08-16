@@ -94,6 +94,7 @@ curl <url of your app> \
           "created_at": "2020-01-02T03:04:05.000+01:00",
           "document_template_id": "f7fbe2b4-a57c-46ee-8422-5ae8cc37daac",
           "download_url": "https://example.com/76bebeb9-9eb1-481a-bc3c-faf43dc3ac81.pdf",
+          "filename": "76bebeb9-9eb1-481a-bc3c-faf43dc3ac81.pdf",
           "id": "76bebeb9-9eb1-481a-bc3c-faf43dc3ac81",
           "meta": null,
           "payload": "{\"name\": \"John Doe\"}",

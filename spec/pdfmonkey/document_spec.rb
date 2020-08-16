@@ -145,21 +145,21 @@ RSpec.describe Pdfmonkey::Document do
 
   describe '#to_json' do
     it 'returns the attributes list as a JSON string' do
-      json = '{"document":{'                     \
-        '"app_id":"app-id value",'               \
-        '"checksum":"checksum value",'           \
-        '"created_at":"created-at value",'       \
-        '"document_template_id":"tpl-id value",' \
-        '"download_url":"download-url value",'   \
-        '"id":null,'                             \
-        '"meta":"meta value",'                   \
-        '"payload":"payload value",'             \
-        '"preview_url":"preview-url value",'     \
-        '"status":"status value",'               \
-        '"updated_at":"updated-at value"'        \
-      '}}'
-
-      expect(subject.to_json).to eq(json)
+      data = JSON.parse(subject.to_json)
+      expect(data).to match('document' => {
+        'app_id' => 'app-id value',
+        'checksum' => 'checksum value',
+        'created_at' => 'created-at value',
+        'document_template_id' => 'tpl-id value',
+        'download_url' => 'download-url value',
+        'filename' => nil,
+        'id' => nil,
+        'meta' => 'meta value',
+        'payload' => 'payload value',
+        'preview_url' => 'preview-url value',
+        'status' => 'status value',
+        'updated_at' => 'updated-at value'
+      })
     end
   end
 
