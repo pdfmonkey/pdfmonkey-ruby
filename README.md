@@ -173,6 +173,44 @@ document.status # => 'error'
 document.errors # => ["Failed to open TCP connection to api.pdfmonkey.io:443 (getaddrinfo: nodename nor servname provided, or not known)"]
 ```
 
+### Deleting a document
+
+You can delete an existing document using the `.delete` method:
+
+```ruby
+Pdfmonkey::Document.delete('76bebeb9-9eb1-481a-bc3c-faf43dc3ac81')
+#=> true
+```
+
+Alternatively you can call the `#delete!` method:
+
+```ruby
+document.delete!
+#=> true
+```
+
+#### Error handling
+
+In case of error, be it an HTTP layer error or an API error, an error Hash will be returned.
+
+```ruby
+document.delete!
+#=> true
+
+document.delete!
+# {
+#   errors: ["We couldn't find any Document with ID \"11111111-2222-3333-4444-555555555555\". If ..."],
+#   status: "error"
+# }
+
+# If the network is down
+document.delete!
+# {
+#   errors: ["Failed to open TCP connection to api.pdfmonkey.io:443 (getaddrinfo: nodename nor servname provided, or not known)"],
+#   status: "error"
+# }
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

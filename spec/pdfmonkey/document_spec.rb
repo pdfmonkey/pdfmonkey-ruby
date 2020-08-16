@@ -17,6 +17,24 @@ RSpec.describe Pdfmonkey::Document do
     updated_at: 'updated-at value'
   }}
 
+  describe '.delete' do
+    let(:adapter) { spy }
+    let(:document) { described_class.delete('xxx') }
+
+    before do
+      allow(Pdfmonkey::Adapter).to receive(:new).and_return(adapter)
+      allow(adapter).to receive(:call).and_return(true)
+    end
+
+    it 'deletes the document' do
+      described_class.delete('xxx')
+
+      expect(adapter)
+        .to have_received(:call)
+        .with(:delete, an_object_having_attributes(id: 'xxx'))
+    end
+  end
+
   describe '.fetch' do
     let(:document) { described_class.fetch('xxx') }
 
@@ -112,6 +130,19 @@ RSpec.describe Pdfmonkey::Document do
       end
     end
   end
+
+  describe '#delete!' do
+    it 'sends a :delete request through the adapter' do
+      expect(adapter).to receive(:call).with(:delete, subject).and_return(true)
+      subject.delete!
+    end
+
+    it 'returns true' do
+      allow(adapter).to receive(:call).with(:delete, subject).and_return(true)
+      expect(subject.delete!).to be true
+    end
+  end
+
 
   describe '#done?' do
     shared_examples 'detecting "done" states' do |state, expected_result|

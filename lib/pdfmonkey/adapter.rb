@@ -11,13 +11,17 @@ module Pdfmonkey
     def call(method, resource)
       response = send_request(method, resource)
 
-      if response.is_a?(Net::HTTPSuccess)
-        extract_attributes(response, resource)
-      else
-        extract_errors(response)
+      case response
+      when Net::HTTPNoContent then true
+      when Net::HTTPSuccess then extract_attributes(response, resource)
+      else extract_errors(response)
       end
     rescue StandardError => e
       { errors: [e.message], status: 'error' }
+    end
+
+    private def build_delete_request(uri, _resource)
+      Net::HTTP::Delete.new(uri, headers)
     end
 
     private def build_get_request(uri, _resource)

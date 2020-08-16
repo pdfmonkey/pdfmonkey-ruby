@@ -3,6 +3,7 @@
 # HEAD
 
 * Adding `Document#filename`
+* Adding `Document.delete` and `Document#delete!`
 
 ## 0.4.0
 

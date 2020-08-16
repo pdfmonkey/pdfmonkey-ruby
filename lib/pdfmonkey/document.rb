@@ -31,6 +31,10 @@ module Pdfmonkey
     attr_reader :attributes
     def_delegators :attributes, *ATTRIBUTES
 
+    def self.delete(document_id)
+      new(id: document_id).delete!
+    end
+
     def self.fetch(document_id)
       new(id: document_id).reload!
     end
@@ -55,6 +59,10 @@ module Pdfmonkey
       @adapter = adapter
       @attributes = OpenStruct.new(ATTRIBUTES.zip([]).to_h)
       update(attributes)
+    end
+
+    def delete!
+      adapter.call(:delete, self)
     end
 
     def done?

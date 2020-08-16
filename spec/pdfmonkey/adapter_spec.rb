@@ -2,12 +2,14 @@ RSpec.describe Pdfmonkey::Adapter do
   let(:http) { double('http', request: response).as_null_object }
   let(:resource_class) { double('resource class') }
   let(:resource) { double('resource', class: resource_class, id: 'test') }
-  let(:response) { double('response', body: response_body, is_a?: success) }
+  let(:response) { double('response', body: response_body) }
   let(:response_body) { '{"resource":{"test":"value"}}' }
-  let(:success) { true }
 
   before do
     allow(Net::HTTP).to receive(:new).and_return(http)
+
+    allow(Net::HTTPSuccess).to receive(:===).with(response).and_return(true)
+    allow(Net::HTTPNoContent).to receive(:===).with(response).and_return(false)
 
     allow(resource_class)
       .to receive(:const_get).with('COLLECTION').and_return('resources')
@@ -30,6 +32,21 @@ RSpec.describe Pdfmonkey::Adapter do
       end
     end
 
+    context 'when calling :delete for a resource' do
+      let(:response_body) { nil }
+      let(:response_class) { Net::HTTPNoContent }
+
+      before do
+        allow(Net::HTTPSuccess).to receive(:===).with(response).and_return(false)
+        allow(Net::HTTPNoContent).to receive(:===).with(response).and_return(true)
+      end
+
+      it 'returns true' do
+        result = subject.call(:delete, resource)
+        expect(result).to be true
+      end
+    end
+
     context 'when the request fails at the HTTP level' do
       before do
         allow(http).to receive(:request).and_raise(SocketError, 'test failed')
@@ -43,7 +60,11 @@ RSpec.describe Pdfmonkey::Adapter do
 
     context 'when the request fails on the API side' do
       let(:response_body) { '{"errors": [{ "detail": "test failed" }]}' }
-      let(:success) { false }
+
+      before do
+        allow(Net::HTTPSuccess).to receive(:===).with(response).and_return(false)
+        allow(Net::HTTPNoContent).to receive(:===).with(response).and_return(false)
+      end
 
       it 'returns a hash containing the error message' do
         attributes = subject.call(:get, resource)
