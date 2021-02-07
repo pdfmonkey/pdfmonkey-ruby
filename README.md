@@ -50,7 +50,7 @@ Once your App is created in the [PDFMonkey Dashboard](https://dashboard.pdfmonke
 If your want to wait for a Document’s generation before continuing with your workflow, use the `generate!` method, it will request a document generation and wait for it to succeed or fail before giving you any answer.
 
 ```ruby
-tempalte_id = 'b13ebd75-d290-409b-9cac-8f597ae3e785'
+template_id = 'b13ebd75-d290-409b-9cac-8f597ae3e785'
 data = { name: 'John Doe' }
 
 document = Pdfmonkey::Document.generate!(template_id, data)
@@ -72,7 +72,7 @@ PDFMonkey was created with an asynchronous workflow in mind. It provides webhook
 To leverage this behavior and continue working while your Document is generated, use the `generate` method:
 
 ```ruby
-tempalte_id = 'b13ebd75-d290-409b-9cac-8f597ae3e785'
+template_id = 'b13ebd75-d290-409b-9cac-8f597ae3e785'
 data = { name: 'John Doe' }
 
 document = Pdfmonkey::Document.generate(template_id, data)
@@ -133,7 +133,7 @@ In case of error, be it an HTTP layer error or an API error, `document.status` w
 ```ruby
 # Using an unknown template
 
-tempalte_id = 'unknown'
+template_id = 'unknown'
 data = { name: 'John Doe' }
 
 document = Pdfmonkey::Document.generate(template_id, data)

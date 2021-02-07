@@ -52,7 +52,7 @@ RSpec.describe Pdfmonkey::Document do
 
   describe '.generate!' do
     let(:adapter) { double }
-    let(:document) { described_class.generate!('test-tempalte-id', test: 'test value') }
+    let(:document) { described_class.generate!('test-template-id', test: 'test value') }
     let(:statuses) {[
       { status: 'pending' },
       { status: 'generating' },
@@ -73,7 +73,7 @@ RSpec.describe Pdfmonkey::Document do
     context 'when the meta parameter is provided' do
       let(:document) do
         described_class.generate!(
-          'test-tempalte-id',
+          'test-template-id',
           { payload_key: 'paylad value' },
           { meta_key: 'meta value' })
       end
@@ -105,7 +105,7 @@ RSpec.describe Pdfmonkey::Document do
 
   describe '.generate' do
     let(:adapter) { ->(_meth, document) { document.attributes.to_h.merge(id: 'new id') } }
-    let(:document) { described_class.generate('test-tempalte-id', test: 'test value') }
+    let(:document) { described_class.generate('test-template-id', test: 'test value') }
 
     before { allow(Pdfmonkey::Adapter).to receive(:new).and_return(adapter) }
 
@@ -120,7 +120,7 @@ RSpec.describe Pdfmonkey::Document do
     context 'when the meta parameter is provided' do
       let(:document) do
         described_class.generate(
-          'test-tempalte-id',
+          'test-template-id',
           { payload_key: 'paylad value' },
           { meta_key: 'meta value' })
       end
