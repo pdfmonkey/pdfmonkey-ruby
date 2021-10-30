@@ -1,6 +1,10 @@
 # Changelog
 
-# 0.5.0
+## HEAD
+
+* Making the request `User-Agent` header configurable
+
+## 0.5.0
 
 * Adding `Document#filename`
 * Adding `Document.delete` and `Document#delete!`

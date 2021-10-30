@@ -50,7 +50,7 @@ module Pdfmonkey
       {
         'Authorization' => "Bearer #{config.private_key}",
         'Content-Type' => 'application/json',
-        'User-Agent' => 'Ruby'
+        'User-Agent' => config.user_agent
       }
     end
 
