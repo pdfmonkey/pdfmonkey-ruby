@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+* Updating bundler to v2.2
+
 ## 0.6.0
 
 * Making the request `User-Agent` header configurable
