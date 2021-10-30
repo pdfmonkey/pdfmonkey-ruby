@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 0.6.0
 
 * Making the request `User-Agent` header configurable
 
