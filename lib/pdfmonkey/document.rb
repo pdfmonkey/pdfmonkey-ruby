@@ -15,11 +15,14 @@ module Pdfmonkey
       document_template_id
       download_url
       errors
+      failure_cause
       filename
+      generation_logs
       id
       meta
       payload
       preview_url
+      public_share_link
       status
       updated_at
     ].freeze

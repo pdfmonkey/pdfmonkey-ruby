@@ -3,6 +3,7 @@
 ## HEAD
 
 * Updating bundler to v2.2
+* Adding `failure_cause`, `generation_logs` and `public_share_link` to the `Document` class
 
 ## 0.6.0
 

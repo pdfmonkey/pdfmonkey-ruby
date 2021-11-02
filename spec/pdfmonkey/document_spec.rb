@@ -10,9 +10,12 @@ RSpec.describe Pdfmonkey::Document do
     created_at: 'created-at value',
     document_template_id: 'tpl-id value',
     download_url: 'download-url value',
+    failure_cause: 'failure-cause value',
+    generation_logs: [],
     meta: 'meta value',
     payload: 'payload value',
     preview_url: 'preview-url value',
+    public_share_link: 'public-share-link value',
     status: 'status value',
     updated_at: 'updated-at value'
   }}
@@ -143,7 +146,6 @@ RSpec.describe Pdfmonkey::Document do
     end
   end
 
-
   describe '#done?' do
     shared_examples 'detecting "done" states' do |state, expected_result|
       let(:attributes) {{ status: state }}
@@ -183,11 +185,14 @@ RSpec.describe Pdfmonkey::Document do
         'created_at' => 'created-at value',
         'document_template_id' => 'tpl-id value',
         'download_url' => 'download-url value',
+        'failure_cause' => 'failure-cause value',
         'filename' => nil,
+        'generation_logs' => [],
         'id' => nil,
         'meta' => 'meta value',
         'payload' => 'payload value',
         'preview_url' => 'preview-url value',
+        'public_share_link' => 'public-share-link value',
         'status' => 'status value',
         'updated_at' => 'updated-at value'
       })
@@ -205,12 +210,15 @@ RSpec.describe Pdfmonkey::Document do
   it_behaves_like 'providing reader method', :created_at, 'created-at value'
   it_behaves_like 'providing reader method', :document_template_id, 'tpl-id value'
   it_behaves_like 'providing reader method', :download_url, 'download-url value'
+  it_behaves_like 'providing reader method', :failure_cause, 'failure-cause value'
+  it_behaves_like 'providing reader method', :generation_logs, []
   it_behaves_like 'providing reader method', :id, 'id value' do
     let(:attributes) {{ id: 'id value' }}
   end
   it_behaves_like 'providing reader method', :meta, 'meta value'
   it_behaves_like 'providing reader method', :payload, 'payload value'
   it_behaves_like 'providing reader method', :preview_url, 'preview-url value'
+  it_behaves_like 'providing reader method', :public_share_link, 'public-share-link value'
   it_behaves_like 'providing reader method', :status, 'status value'
   it_behaves_like 'providing reader method', :updated_at, 'updated-at value'
 end
