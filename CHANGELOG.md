@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 0.8.0
 
 * Adding support for single error responses
 
