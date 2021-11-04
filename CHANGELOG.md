@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+* Adding support for single error responses
+
 ## 0.7.0
 
 * Updating bundler to v2.2

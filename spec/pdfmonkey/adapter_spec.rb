@@ -59,16 +59,27 @@ RSpec.describe Pdfmonkey::Adapter do
     end
 
     context 'when the request fails on the API side' do
-      let(:response_body) { '{"errors": [{ "detail": "test failed" }]}' }
-
       before do
         allow(Net::HTTPSuccess).to receive(:===).with(response).and_return(false)
         allow(Net::HTTPNoContent).to receive(:===).with(response).and_return(false)
       end
 
-      it 'returns a hash containing the error message' do
-        attributes = subject.call(:get, resource)
-        expect(attributes).to eq(status: 'error', errors: ['test failed'])
+      context 'with an "error" response' do
+        let(:response_body) { '{ "error": "test failed" }' }
+
+        it 'returns a hash containing the error message' do
+          attributes = subject.call(:get, resource)
+          expect(attributes).to eq(status: 'error', errors: ['test failed'])
+        end
+      end
+
+      context 'with an "errors" response' do
+        let(:response_body) { '{ "errors": [{ "detail": "test failed" }]}' }
+
+        it 'returns a hash containing the error message' do
+          attributes = subject.call(:get, resource)
+          expect(attributes).to eq(status: 'error', errors: ['test failed'])
+        end
       end
     end
   end
