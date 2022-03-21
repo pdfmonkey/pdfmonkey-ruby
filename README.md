@@ -1,6 +1,6 @@
 # PDFMonkey
 
-[![Build Status](https://travis-ci.com/pdfmonkey/pdfmonkey-ruby.svg?branch=master)](https://travis-ci.com/pdfmonkey/pdfmonkey-ruby)
+[![CI](https://github.com/pdfmonkey/pdfmonkey-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/pdfmonkey/pdfmonkey-ruby/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pdfmonkey/pdfmonkey-ruby/badge.svg?branch=master)](https://coveralls.io/github/pdfmonkey/pdfmonkey-ruby?branch=master)
 
 This gem is the quickest way to use the [PDFMonkey](https://www.pdfmonkey.io) API.
