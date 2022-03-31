@@ -58,7 +58,7 @@ document.status       # => 'success'
 document.download_url # => 'https://…'
 ```
 
-:warning: The download URL of a document is only valid **for 30 seconds**. Passed this delay, reload the document to obtain a new one:
+:warning: The download URL of a document is only valid **for 1 hour**. Passed this delay, reload the document to obtain a new one:
 
 ```ruby
 document.reload!
