@@ -81,6 +81,15 @@ RSpec.describe Pdfmonkey::Adapter do
           expect(attributes).to eq(status: 'error', errors: ['test failed'])
         end
       end
+
+      context 'with an "errors" response for validation errors' do
+        let(:response_body) { '{"errors":{"status":["Quota error message"]}}' }
+
+        it 'returns a hash containing the error messages' do
+          attributes = subject.call(:post, resource)
+          expect(attributes).to eq(status: 'error', errors: { 'status' => ['Quota error message'] })
+        end
+      end
     end
   end
 end

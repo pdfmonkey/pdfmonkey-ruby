@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+
+* Fixing the handling of validation errors to expose errors correctly
+
 ## 0.8.0
 
 * Adding support for single error responses

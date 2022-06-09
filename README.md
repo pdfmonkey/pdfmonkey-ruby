@@ -140,6 +140,12 @@ document = Pdfmonkey::Document.generate(template_id, data)
 document.status # => 'error'
 document.errors # => ["Document template must exist"]
 
+# If your quota is depleted
+document = Pdfmonkey::Document.generate(template_id, data)
+
+document.status # => 'error'
+document.errors # => { "status" => ["You’ve reached your quota for th..."] }
+
 # If the network is down
 document = Pdfmonkey::Document.generate(template_id, data)
 

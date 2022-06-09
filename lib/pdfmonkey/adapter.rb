@@ -44,8 +44,10 @@ module Pdfmonkey
       errors =
         if payload['error']
           [payload['error']]
-        else
-          payload['errors'].to_a.map { |error| error['detail'] }
+        elsif payload['errors'].is_a?(Array)
+          payload['errors'].map { |error| error['detail'] }
+        elsif payload['errors'].is_a?(Hash)
+          payload['errors']
         end
 
       { errors: errors, status: 'error' }
