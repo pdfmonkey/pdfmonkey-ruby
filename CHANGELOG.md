@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## 0.8.1
 
 * Fixing the handling of validation errors to expose errors correctly
 
