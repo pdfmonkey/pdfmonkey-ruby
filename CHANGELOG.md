@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+## 0.9.0
+
+* Testing against Ruby 3.2, 3.3 and 3.4
+* Adding a Dependabot configuration file
+* Adding ostruct as a runtime dependency in preparation of Ruby 3.5
+* Bumping rake from 13.0.6 to 13.2.1
+* Bumping rexml from 3.2.5 to 3.3.9
+* Bumping rspec from 3.11 to 3.13
+* Bumping actions/checkout from 3 to 4
+
 ## 0.8.1
 
 * Fixing the handling of validation errors to expose errors correctly
