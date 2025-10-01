@@ -127,7 +127,7 @@ document.meta
 
 #### Error handling
 
-In case of error, be it an HTTP layer error or an API error, `document.status` will be set to `'error'` and `document.error` will contain the error message.
+In case of error, be it an HTTP layer error or an API error, `document.status` will be set to `'error'` and `document.errors` will contain the error message.
 
 ```ruby
 # Using an unknown template
