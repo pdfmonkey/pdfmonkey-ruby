@@ -6,38 +6,35 @@ jobs:
   specs:
     name: Run specs with Ruby ${{matrix.ruby}}
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || false }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - ruby: '2.6'
-            bundler: 2.2.30
-          - ruby: '2.7'
-            bundler: 2.2.30
-          - ruby: '3.0'
-            bundler: 2.2.30
-          - ruby: '3.1'
+          - ruby: "3.2"
             bundler: 2.6.3
-          - ruby: '3.2'
+          - ruby: "3.3"
             bundler: 2.6.3
-          - ruby: '3.3'
+          - ruby: "3.4"
             bundler: 2.6.3
-          - ruby: '3.4'
+          - ruby: "4.0"
+            bundler: 2.6.3
+          - ruby: "4.0.1"
             bundler: 2.6.3
           - ruby: head
             bundler: 2.6.3
             experimental: true
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{matrix.ruby}}
-        bundler: ${{matrix.bundler}}
-        bundler-cache: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{matrix.ruby}}
+          bundler: ${{matrix.bundler}}
+          bundler-cache: true
 
-    - name: Install gems
-      run: bundle _${{matrix.bundler}}_ install
+      - name: Install gems
+        run: bundle _${{matrix.bundler}}_ install
 
-    - name: Run specs
-      run: bundle _${{matrix.bundler}}_ exec rspec
+      - name: Run specs
+        run: bundle _${{matrix.bundler}}_ exec rspec

@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+### Breaking changes
+
+* **Requiring Ruby >= 3.2** — The gem now requires Ruby 3.2 or later.
+* **Exception-based error handling** — API errors now raise `Pdfmonkey::ApiError` (with `errors` and `status_code` attributes) and network errors raise `Pdfmonkey::ConnectionError` instead of returning error hashes. Rescue `Pdfmonkey::Error` for a catch-all.
+* **`Document.generate!` / `Document.generate` signature change** — These methods now use keyword arguments (`document_template_id:`, `payload:`, `meta:`). Positional arguments still work but emit a deprecation warning.
+* **`Document.generate!` raises on failure** — `Document.generate!` now raises `Pdfmonkey::GenerationError` when the document ends with `error` or `failure` status, instead of returning the failed document.
+* **`Document.generate!` polling** — `Document.generate!` now sleeps `poll_interval` seconds (default 0.5s) between status polls instead of busy-looping.
+* **`document_template_id` validation** — `Document.generate!`, `Document.generate`, and `Document.create_draft` now raise `ArgumentError` when `document_template_id` is missing or blank.
+* **Removing `ostruct` dependency** — Attributes are now backed by `Struct` instead of `OpenStruct`. This removes the runtime dependency on the `ostruct` gem.
+* **`Document#attributes` is no longer public** — Access individual attributes through their accessor methods instead.
+* **`User-Agent` is no longer configurable** — The `user_agent` configuration option has been removed. The header is now always `pdfmonkey-ruby/<version>`.
+* **`to_json` omits nil attributes** — `Resource#to_json` now compacts nil values and strips the `errors` attribute from the serialized output.
+* **Resource base class** — All resource classes now inherit from `Pdfmonkey::Resource` which provides shared CRUD operations, attribute management and JSON serialization.
+
+### New features
+
+* Adding `Document#generate` and `Document#generate!` instance methods for triggering generation on draft documents
+* Adding `Document#save` as a public method (was private in 0.9.0)
+* Adding `Document.create_draft` for creating draft documents with preview support
+* Adding `Document#update!` for updating document attributes via PUT
+* Adding `Document.list_cards`, `Document.fetch_card`, and `Document.fetch_full` for accessing documents through the `Document` class
+* Adding `output_type` to `Document` attributes
+* Adding resources for:
+  * `Engine`
+  * `Snippet`
+  * `TemplateCard`
+  * `TemplateFolder`
+  * `Template`
+  * `Webhook`
+  * `Workspace` (read-only)
+* Adding `CurrentUser.fetch` for retrieving authenticated user info
+* Adding `Pdfmonkey.with_adapter` for per-request adapter scoping (e.g. multi-tenant credentials)
+* Adding persistent HTTP connections with configurable timeouts (`open_timeout`, `read_timeout`, `keep_alive_timeout`)
+* Adding API key validation at request time (raises `Pdfmonkey::Error` if unconfigured)
+
 ## 0.9.0
 
 * Testing against Ruby 3.2, 3.3 and 3.4

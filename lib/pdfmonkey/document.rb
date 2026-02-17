@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'forwardable'
-require 'json'
-require 'ostruct'
-
 module Pdfmonkey
-  class Document
-    extend Forwardable
+  class Document < Resource
+    include Fetchable
+    include Creatable
+    include Updatable
+    include Deletable
 
     ATTRIBUTES = %i[
       app_id
@@ -20,6 +19,7 @@ module Pdfmonkey
       generation_logs
       id
       meta
+      output_type
       payload
       preview_url
       public_share_link
@@ -28,78 +28,106 @@ module Pdfmonkey
     ].freeze
 
     COMPLETE_STATUSES = %w[error failure success].freeze
+    FAILURE_STATUSES = %w[error failure].freeze
     COLLECTION = 'documents'
     MEMBER = 'document'
 
-    attr_reader :attributes
     def_delegators :attributes, *ATTRIBUTES
 
-    def self.delete(document_id)
-      new(id: document_id).delete!
+    def self.generate!(*args, document_template_id: nil, payload: nil, meta: nil)
+      document_template_id, payload, meta =
+        resolve_document_args(args, document_template_id, payload, meta, __method__)
+      validate_template_id!(document_template_id)
+
+      generate(document_template_id: document_template_id, payload: payload, meta: meta)
+        .send(:poll_until_done!)
     end
 
-    def self.fetch(document_id)
-      new(id: document_id).reload!
+    def self.generate(*args, document_template_id: nil, payload: nil, meta: nil)
+      create_document('pending', args, document_template_id, payload, meta, __method__)
     end
 
-    def self.generate!(document_template_id, payload, meta = {})
-      document = generate(document_template_id, payload, meta)
-      document.reload! until document.done?
-      document
+    def self.create_draft(*args, document_template_id: nil, payload: nil, meta: nil)
+      create_document('draft', args, document_template_id, payload, meta, __method__)
     end
 
-    def self.generate(template_id, payload, meta = {})
-      document = new(
-        document_template_id: template_id,
-        meta: meta.to_json,
-        payload: payload.to_json,
-        status: 'pending')
+    private_class_method def self.create_document(status, args, document_template_id, payload, meta, method_name)
+      document_template_id, payload, meta =
+        resolve_document_args(args, document_template_id, payload, meta, method_name)
+      validate_template_id!(document_template_id)
 
-      document.send(:save)
+      new(
+        document_template_id: document_template_id,
+        meta: json_encode(meta),
+        payload: json_encode(payload),
+        status: status
+      ).save
     end
 
-    def initialize(adapter: Pdfmonkey::Adapter.new, **attributes)
-      @adapter = adapter
-      @attributes = OpenStruct.new(ATTRIBUTES.zip([]).to_h)
-      update(attributes)
+    private_class_method def self.validate_template_id!(template_id)
+      return unless template_id.nil? || template_id.to_s.strip.empty?
+
+      raise ArgumentError, 'document_template_id is required'
     end
 
-    def delete!
-      adapter.call(:delete, self)
+    private_class_method def self.json_encode(value)
+      case value
+      when nil then nil
+      when String then value
+      else value.to_json
+      end
+    end
+
+    private_class_method def self.resolve_document_args(args, kw_template_id, kw_payload, meta, method_name)
+      if args.any?
+        warn "[PDFMonkey] Positional arguments for Document.#{method_name} are deprecated. " \
+             'Use keyword arguments instead: ' \
+             "Document.#{method_name}(document_template_id:, payload:, meta:)",
+             uplevel: 2
+        [args[0], args[1], args[2] || meta]
+      else
+        [kw_template_id, kw_payload, meta]
+      end
+    end
+
+    def self.list_cards(**)
+      Pdfmonkey::DocumentCard.list(**)
+    end
+
+    def self.fetch_card(id)
+      Pdfmonkey::DocumentCard.fetch(id)
+    end
+
+    def self.fetch_full(id)
+      fetch(id)
+    end
+
+    def generate
+      update!(status: 'pending')
+    end
+
+    def generate!
+      generate
+      poll_until_done!
     end
 
     def done?
       COMPLETE_STATUSES.include?(status)
     end
 
-    def reload!
-      attributes = adapter.call(:get, self)
-      update(attributes)
-      self
-    end
-
-    def to_json
-      attrs = attributes.to_h
-      attrs.delete(:errors)
-
-      { document: attrs }.to_json
-    end
-
-    private def save
-      attributes = adapter.call(:post, self)
-      update(attributes)
-      self
-    end
-
-    private def update(new_attributes)
-      new_attributes.each do |key, value|
-        sym_key = key.to_sym
-        attributes[sym_key] = value if ATTRIBUTES.include?(sym_key)
+    private def poll_until_done!
+      until done?
+        sleep(Pdfmonkey.configuration.poll_interval)
+        reload!
       end
+
+      if FAILURE_STATUSES.include?(status)
+        message = 'Document generation failed'
+        message += ": #{failure_cause}" if failure_cause
+        raise Pdfmonkey::GenerationError.new(message, document: self)
+      end
+
+      self
     end
-
-    private
-
-    attr_reader :adapter
   end
 end
