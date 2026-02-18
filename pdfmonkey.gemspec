@@ -15,17 +15,21 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/pdfmonkeyio/pdfmonkey-ruby'
   spec.license       = 'MIT'
 
-  spec.files         = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
+  spec.metadata = {
+    'changelog_uri' => 'https://github.com/pdfmonkeyio/pdfmonkey-ruby/blob/master/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/pdfmonkeyio/pdfmonkey-ruby',
+    'rubygems_mfa_required' => 'true'
+  }
+
+  spec.required_ruby_version = '>= 3.2'
+
+  spec.files         = Dir['lib/**/*', 'LICENSE.txt', 'README.md', 'CHANGELOG.md']
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'ostruct', '>= 0.6.0'
-
   spec.add_development_dependency 'bundler', '~> 2.2'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
-  spec.add_development_dependency 'rubocop', '~> 1.26'
+  spec.add_development_dependency 'rubocop', '~> 1.68'
 end

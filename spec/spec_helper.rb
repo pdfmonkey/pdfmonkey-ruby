@@ -91,6 +91,11 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
+  config.before(:each) do
+    Pdfmonkey.configuration = Pdfmonkey::Configuration.new
+    Pdfmonkey.configuration.private_key = 'test-api-key'
+  end
+
   config.order = :random
 
   # Seed global randomization in this process using the `--seed` CLI option.

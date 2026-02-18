@@ -22,6 +22,17 @@ RSpec.describe Pdfmonkey do
     end
   end
 
+  describe 'Configuration#inspect' do
+    it 'does not expose the private key' do
+      config = Pdfmonkey::Configuration.new
+      config.private_key = 'sk_live_secret_key'
+      result = config.inspect
+      expect(result).not_to include('sk_live_secret_key')
+      expect(result).to include('host=')
+      expect(result).to include('namespace=')
+    end
+  end
+
   describe '.configure' do
     it 'yields the Configuration to the provided block' do
       expect { |b|
