@@ -22,7 +22,7 @@ jobs:
           - ruby: "4.0.1"
             bundler: 2.6.3
           - ruby: head
-            bundler: 2.6.3
+            bundler: 4.0.21
             experimental: true
     steps:
       - uses: actions/checkout@v6
