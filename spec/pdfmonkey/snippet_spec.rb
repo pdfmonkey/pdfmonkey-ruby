@@ -26,14 +26,38 @@ RSpec.describe Pdfmonkey::Snippet do
     end
 
     it 'returns a Collection' do
-      result = described_class.list
+      result = described_class.list(workspace_id: 'ws-1')
       expect(result).to be_a(Pdfmonkey::Collection)
     end
 
     it 'contains Snippet items' do
-      result = described_class.list
+      result = described_class.list(workspace_id: 'ws-1')
       expect(result.first).to be_a(described_class)
       expect(result.first.identifier).to eq('header')
+    end
+
+    it 'requires workspace_id' do
+      expect { described_class.list }.to raise_error(ArgumentError)
+    end
+
+    it 'passes workspace_id, folders, search and page params' do
+      described_class.list(workspace_id: 'ws-1', folders: 'folder-1', search: 'head', page: 2)
+
+      expect(adapter).to have_received(:call).with(
+        :get, anything,
+        params: hash_including(
+          'q[workspace_id]' => 'ws-1',
+          'q[folders]' => 'folder-1',
+          'q[search]' => 'head',
+          'page[number]' => 2
+        ),
+        extract: :collection
+      )
+    end
+
+    it 'rejects unknown filters' do
+      expect { described_class.list(workspace_id: 'ws-1', sort: 'name') }
+        .to raise_error(ArgumentError, /Unknown filter/)
     end
   end
 

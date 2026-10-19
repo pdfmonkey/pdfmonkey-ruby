@@ -15,6 +15,7 @@ module Pdfmonkey
       errors
       id
       identifier
+      snippet_folder_id
       updated_at
       updater_name
       workspace_id
@@ -23,6 +24,16 @@ module Pdfmonkey
     COLLECTION = 'snippets'
     MEMBER = 'snippet'
 
+    FILTERS = {
+      workspace_id: 'q[workspace_id]',
+      folders: 'q[folders]',
+      search: 'q[search]'
+    }.freeze
+
     def_delegators :attributes, *ATTRIBUTES
+
+    def self.list(workspace_id:, **)
+      super
+    end
   end
 end
