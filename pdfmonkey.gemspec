@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.metadata = {
-    'changelog_uri' => 'https://github.com/pdfmonkeyio/pdfmonkey-ruby/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/pdfmonkeyio/pdfmonkey-ruby/blob/main/CHANGELOG.md',
     'source_code_uri' => 'https://github.com/pdfmonkeyio/pdfmonkey-ruby',
     'rubygems_mfa_required' => 'true'
   }
