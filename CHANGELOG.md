@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+* **`Snippet.list` now requires `workspace_id:`** — Without it the API always returned an empty list. Also accepts `folders:` and `search:` filters.
+* Adding `snippet_folder_id` to `Snippet` attributes
+
 ## 1.0.0 - 2026-02-18
 
 ### Breaking changes

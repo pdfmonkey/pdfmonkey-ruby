@@ -404,8 +404,12 @@ template = Pdfmonkey::Template.create(
 Snippets are reusable HTML components that can be included in templates.
 
 ```ruby
-# List snippets
-snippets = Pdfmonkey::Snippet.list
+# List snippets (workspace_id is required)
+snippets = Pdfmonkey::Snippet.list(workspace_id: 'f4ab650c-…')
+
+# Filter by folder or search by identifier
+snippets = Pdfmonkey::Snippet.list(workspace_id: 'f4ab650c-…', folders: 'folder-id')
+snippets = Pdfmonkey::Snippet.list(workspace_id: 'f4ab650c-…', search: 'header')
 
 # Create a snippet
 snippet = Pdfmonkey::Snippet.create(
